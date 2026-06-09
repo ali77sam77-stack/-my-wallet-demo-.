@@ -1,51 +1,57 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>محفظتي</title>
     <style>
-        body { background: black; color: white; text-align: center; font-family: sans-serif; padding-top: 50px; }
-        h2 { color: green; font-size: 40px; margin: 20px 0; }
-        button { padding: 15px 30px; font-size: 20px; margin: 10px; cursor: pointer; border-radius: 10px; border: none; background-color: #28a745; color: white; transition: 0.3s; }
-        button:hover { background-color: #218838; }
-        button:active { transform: scale(0.95); }
+        body { background-color: #1a1e23; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; padding-top: 50px; }
+        .bybit-card { background-color: #161a1e; width: 800px; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .balance { font-size: 32px; font-weight: bold; margin: 10px 0; }
+        .actions { display: flex; gap: 10px; margin: 20px 0; }
+        .action-btn { flex: 1; background: #252a31; padding: 15px; text-align: center; border-radius: 5px; cursor: pointer; border: 1px solid #333; }
+        .action-btn:hover { background: #2f3640; }
+        .highlight { color: #f7b500; }
     </style>
 </head>
 <body>
 
-    <h1>رصيد المحفظة</h1>
-    <h2 id="balance">12,950,725.02 TRC20</h2>
+<div class="bybit-card">
+    <div class="header">
+        <span>Total Assets (USDT)</span>
+        <span class="highlight">Bybit</span>
+    </div>
+    <div class="balance" id="balance">7,642,720.00</div>
+    
+    <div class="actions">
+        <div class="action-btn">Deposit</div>
+        <div class="action-btn">Withdraw</div>
+        <div class="action-btn" onclick="transfer()">Transfer</div>
+        <div class="action-btn">Convert</div>
+    </div>
+    
+    <div style="border-top: 1px solid #333; padding-top: 20px;">
+        <p>Portfolio Breakdown</p>
+        <div style="height: 10px; background: #333; border-radius: 5px;"></div>
+    </div>
+</div>
 
-    <button onclick="increase()">زيادة الرصيد</button>
-    <button onclick="transfer()">تحويل الرصيد</button>
-
-    <script>
-        // دالة زيادة الرصيد
-        function increase() {
-            let el = document.getElementById('balance');
-            let val = parseFloat(el.innerHTML.replace(/,/g, '').replace(' TRC20', ''));
-            el.innerHTML = (val + 100000).toLocaleString(undefined, {minimumFractionDigits: 2}) + " TRC20";
-        }
-
-        // دالة تحويل الرصيد التفاعلية
-        function transfer() {
-            let address = prompt("يرجى إدخال عنوان المحفظة المراد التحويل إليها:");
-            if (address != null && address != "") {
-                let amount = prompt("أدخل المبلغ المراد تحويله:");
-                if (amount != null && amount != "") {
-                    let numAmount = parseFloat(amount);
+<script>
+    function transfer() {
+        let address = prompt("Enter Wallet Address:");
+        if (address) {
+            let amount = prompt("Enter Amount (USDT):");
+            if (amount) {
+                alert("Processing transaction to: " + address);
+                setTimeout(() => {
                     let el = document.getElementById('balance');
-                    let currentBalance = parseFloat(el.innerHTML.replace(/,/g, '').replace(' TRC20', ''));
-                    
-                    // خصم المبلغ وتحديث الشاشة مع إضافة TRC20
-                    el.innerHTML = (currentBalance - numAmount).toLocaleString(undefined, {minimumFractionDigits: 2}) + " TRC20";
-                    
-                    // رسالة تأكيد الإرسال للمستقبل
-                    alert("تم إرسال " + amount + " TRC20 بنجاح إلى الحساب المستقبل: " + address);
-                }
+                    let current = parseFloat(el.innerHTML.replace(/,/g, ''));
+                    el.innerHTML = (current - parseFloat(amount)).toLocaleString(undefined, {minimumFractionDigits: 2});
+                    alert("Transfer Successful!");
+                }, 2000);
             }
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
