@@ -6,7 +6,7 @@
     <style>
         body { background: black; color: white; text-align: center; font-family: sans-serif; padding-top: 50px; }
         h2 { color: green; font-size: 40px; }
-        button { padding: 15px; font-size: 20px; margin: 10px; cursor: pointer; border-radius: 10px; }
+        button { padding: 15px 25px; font-size: 20px; margin: 10px; cursor: pointer; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -14,24 +14,22 @@
     <h1>رصيد المحفظة</h1>
     <h2 id="balance">12,950,725.02</h2>
 
-    <button onclick="increaseBalance()">زيادة الرصيد</button>
-    <button onclick="transferBalance()">تحويل الرصيد</button>
+    <button onclick="increase()">زيادة الرصيد</button>
+    <button onclick="decrease()">تحويل الرصيد</button>
 
     <script>
-        // دالة زيادة الرصيد
-        function increaseBalance() {
-            let balanceElement = document.getElementById('balance');
-            let currentBalance = parseFloat(balanceElement.innerHTML.replace(/,/g, ''));
-            let newBalance = currentBalance + 1000;
-            balanceElement.innerHTML = newBalance.toLocaleString() + ' TRC20';
+        function increase() {
+            let el = document.getElementById('balance');
+            let val = parseFloat(el.innerHTML.replace(/,/g, ''));
+            // زيادة بمقدار 100,000
+            el.innerHTML = (val + 100000).toLocaleString(undefined, {minimumFractionDigits: 2});
         }
 
-        // دالة تحويل الرصيد (مفتوحة بدون حدود)
-        function transferBalance() {
-            let balanceElement = document.getElementById('balance');
-            let currentBalance = parseFloat(balanceElement.innerHTML.replace(/,/g, ''));
-            let newBalance = currentBalance - 1000;
-            balanceElement.innerHTML = newBalance.toLocaleString() + ' TRC20';
+        function decrease() {
+            let el = document.getElementById('balance');
+            let val = parseFloat(el.innerHTML.replace(/,/g, ''));
+            // تحويل (نقصان) بمقدار 100,000
+            el.innerHTML = (val - 100000).toLocaleString(undefined, {minimumFractionDigits: 2});
         }
     </script>
 
