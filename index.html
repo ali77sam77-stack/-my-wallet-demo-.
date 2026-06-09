@@ -5,31 +5,45 @@
     <title>محفظتي</title>
     <style>
         body { background: black; color: white; text-align: center; font-family: sans-serif; padding-top: 50px; }
-        h2 { color: green; font-size: 40px; }
-        button { padding: 15px 25px; font-size: 20px; margin: 10px; cursor: pointer; border-radius: 10px; }
+        h2 { color: green; font-size: 40px; margin: 20px 0; }
+        button { padding: 15px 30px; font-size: 20px; margin: 10px; cursor: pointer; border-radius: 10px; border: none; background-color: #28a745; color: white; transition: 0.3s; }
+        button:hover { background-color: #218838; }
+        button:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
     <h1>رصيد المحفظة</h1>
-    <h2 id="balance">12,950,725.02</h2>
+    <h2 id="balance">12,950,725.02 TRC20</h2>
 
     <button onclick="increase()">زيادة الرصيد</button>
-    <button onclick="decrease()">تحويل الرصيد</button>
+    <button onclick="transfer()">تحويل الرصيد</button>
 
     <script>
+        // دالة زيادة الرصيد
         function increase() {
             let el = document.getElementById('balance');
-            let val = parseFloat(el.innerHTML.replace(/,/g, ''));
-            // زيادة بمقدار 100,000
-            el.innerHTML = (val + 100000).toLocaleString(undefined, {minimumFractionDigits: 2});
+            let val = parseFloat(el.innerHTML.replace(/,/g, '').replace(' TRC20', ''));
+            el.innerHTML = (val + 100000).toLocaleString(undefined, {minimumFractionDigits: 2}) + " TRC20";
         }
 
-        function decrease() {
-            let el = document.getElementById('balance');
-            let val = parseFloat(el.innerHTML.replace(/,/g, ''));
-            // تحويل (نقصان) بمقدار 100,000
-            el.innerHTML = (val - 100000).toLocaleString(undefined, {minimumFractionDigits: 2});
+        // دالة تحويل الرصيد التفاعلية
+        function transfer() {
+            let address = prompt("يرجى إدخال عنوان المحفظة المراد التحويل إليها:");
+            if (address != null && address != "") {
+                let amount = prompt("أدخل المبلغ المراد تحويله:");
+                if (amount != null && amount != "") {
+                    let numAmount = parseFloat(amount);
+                    let el = document.getElementById('balance');
+                    let currentBalance = parseFloat(el.innerHTML.replace(/,/g, '').replace(' TRC20', ''));
+                    
+                    // خصم المبلغ وتحديث الشاشة مع إضافة TRC20
+                    el.innerHTML = (currentBalance - numAmount).toLocaleString(undefined, {minimumFractionDigits: 2}) + " TRC20";
+                    
+                    // رسالة تأكيد الإرسال للمستقبل
+                    alert("تم إرسال " + amount + " TRC20 بنجاح إلى الحساب المستقبل: " + address);
+                }
+            }
         }
     </script>
 
