@@ -3,10 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>محفظتي</title>
+    <style>
+        body { background: black; color: white; text-align: center; font-family: sans-serif; padding-top: 50px; }
+        h2 { color: green; font-size: 40px; }
+        button { padding: 15px; font-size: 20px; margin: 10px; cursor: pointer; border-radius: 10px; }
+    </style>
 </head>
-<body style="background:black; color:white; text-align:center; font-family:sans-serif; padding-top:50px;">
+<body>
+
     <h1>رصيد المحفظة</h1>
-    <h2 id="balance" style="color:green; font-size:40px;">12,950,725.02 TRC20</h2>
-    <button onclick="document.getElementById('balance').innerHTML = '12,950,725.02 TRC20'" style="padding:15px; font-size:20px;">زيادة الرصيد</button>
+    <h2 id="balance">12,950,725.02</h2>
+
+    <button onclick="increaseBalance()">زيادة الرصيد</button>
+    <button onclick="transferBalance()">تحويل الرصيد</button>
+
+    <script>
+        // دالة زيادة الرصيد
+        function increaseBalance() {
+            let balanceElement = document.getElementById('balance');
+            let currentBalance = parseFloat(balanceElement.innerHTML.replace(/,/g, ''));
+            let newBalance = currentBalance + 1000;
+            balanceElement.innerHTML = newBalance.toLocaleString() + ' TRC20';
+        }
+
+        // دالة تحويل الرصيد (مفتوحة بدون حدود)
+        function transferBalance() {
+            let balanceElement = document.getElementById('balance');
+            let currentBalance = parseFloat(balanceElement.innerHTML.replace(/,/g, ''));
+            let newBalance = currentBalance - 1000;
+            balanceElement.innerHTML = newBalance.toLocaleString() + ' TRC20';
+        }
+    </script>
+
 </body>
 </html>
