@@ -1,53 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <style>
-        body { background-color: #1a1e23; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; padding-top: 50px; }
-        .bybit-card { background-color: #161a1e; width: 800px; padding: 20px; border-radius: 10px; border: 1px solid #333; }
-        .header { display: flex; justify-content: space-between; align-items: center; }
-        .balance { font-size: 32px; font-weight: bold; margin: 10px 0; }
-        .actions { display: flex; gap: 10px; margin: 20px 0; }
-        .action-btn { flex: 1; background: #252a31; padding: 15px; text-align: center; border-radius: 5px; cursor: pointer; border: 1px solid #333; }
-        .action-btn:hover { background: #2f3640; }
-        .highlight { color: #f7b500; }
+        body { background-color: #0b0e11; color: #eaecef; font-family: 'Segoe UI', Tahoma, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e2329; width: 600px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .label { color: #848e9c; font-size: 14px; margin-bottom: 5px; }
+        .balance { font-size: 36px; font-weight: bold; color: #fff; margin-bottom: 25px; }
+        .actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .btn { background: #2b3139; color: #eaecef; padding: 12px 5px; border-radius: 6px; text-align: center; cursor: pointer; font-size: 13px; transition: 0.3s; border: none; }
+        .btn:hover { background: #363c46; }
+        .footer-line { margin-top: 30px; border-top: 1px solid #363c46; padding-top: 15px; color: #848e9c; font-size: 14px; }
     </style>
 </head>
 <body>
 
-<div class="bybit-card">
-    <div class="header">
-        <span>Total Assets (USDT)</span>
-        <span class="highlight">Bybit</span>
-    </div>
+<div class="card">
+    <div class="label">إجمالي الأصول (بالدولار الأمريكي)</div>
     <div class="balance" id="balance">7,642,720.00</div>
     
     <div class="actions">
-        <div class="action-btn">Deposit</div>
-        <div class="action-btn">Withdraw</div>
-        <div class="action-btn" onclick="transfer()">Transfer</div>
-        <div class="action-btn">Convert</div>
+        <button class="btn">إيداع</button>
+        <button class="btn">سحب</button>
+        <button class="btn" onclick="transfer()">تحويل</button>
+        <button class="btn">تحويل عملات</button>
     </div>
-    
-    <div style="border-top: 1px solid #333; padding-top: 20px;">
-        <p>Portfolio Breakdown</p>
-        <div style="height: 10px; background: #333; border-radius: 5px;"></div>
-    </div>
+
+    <div class="footer-line">تحليل المحفظة الاستثمارية</div>
 </div>
 
 <script>
     function transfer() {
-        let address = prompt("Enter Wallet Address:");
+        let address = prompt("يرجى إدخال عنوان محفظة Bybit:");
         if (address) {
-            let amount = prompt("Enter Amount (USDT):");
+            let amount = prompt("أدخل المبلغ المراد تحويله:");
             if (amount) {
-                alert("Processing transaction to: " + address);
+                alert("جاري الاتصال بشبكة Bybit...");
                 setTimeout(() => {
                     let el = document.getElementById('balance');
-                    let current = parseFloat(el.innerHTML.replace(/,/g, ''));
-                    el.innerHTML = (current - parseFloat(amount)).toLocaleString(undefined, {minimumFractionDigits: 2});
-                    alert("Transfer Successful!");
-                }, 2000);
+                    let val = parseFloat(el.innerHTML.replace(/,/g, ''));
+                    el.innerHTML = (val - parseFloat(amount)).toLocaleString(undefined, {minimumFractionDigits: 2});
+                    alert("تم الإرسال بنجاح إلى Bybit.");
+                }, 1500);
             }
         }
     }
